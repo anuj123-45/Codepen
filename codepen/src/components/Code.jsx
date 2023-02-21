@@ -1,8 +1,13 @@
-import React from 'react'
+import React from 'react';
+import Editor from './Editor';
 
 function Code() {
   return (
-    <div>Code</div>
+    <>
+    <Editor/>
+    <Editor/>
+    <Editor/>
+    </>
   )
 }
 
