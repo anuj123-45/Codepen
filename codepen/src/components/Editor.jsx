@@ -1,6 +1,6 @@
-import React from "react";
+import React ,{useState}from "react";
 import { Box, styled } from "@mui/material";
-import '../App.css';
+import "../App.css";
 import CloseFullscreenIcon from "@mui/icons-material/CloseFullscreen";
 import { Controlled as CodeMirror } from "react-codemirror2";
 import "codemirror/lib/codemirror.css";
@@ -9,7 +9,12 @@ import "codemirror/mode/xml/xml";
 import "codemirror/mode/javascript/javascript";
 import "codemirror/mode/css/css";
 
-export default function Editor() {
+
+const Container = styled(Box)`
+flex-grow:1;
+padding:0 8px 8px
+  `;
+
   const Heading = styled(Box)`
     background: #1d1e22;
     display: flex;
@@ -24,14 +29,20 @@ export default function Editor() {
     font-weight: 700px;
   `;
 
+ function Editor({ heading, icon, color,value,onChange }) {
+const [open,setOpen]=useState(true);
+
+  const handleChange=(editor,data,value)=>{
+       onChange(value);
+  }
   return (
-    <Box>
+    <Container style={open ? null:{flexGrow:0}}>
       <Header>
         <Heading>
           <Box
             component="span"
             style={{
-              background: "red",
+              background: color,
               height: 20,
               width: 30,
               display: "flex",
@@ -39,23 +50,32 @@ export default function Editor() {
               borderRadius: 5,
               marginRight: 9,
               padding: 2,
+              color: "#000",
             }}
           >
-            /
+            <b>{icon}</b>
           </Box>
-          HTML
+          {heading}
         </Heading>
-        <CloseFullscreenIcon />
+        <CloseFullscreenIcon 
+        fontSize="small"
+        style={{alignSelf:'center'}}
+        onClick={()=>setOpen(prevState=>!prevState)}
+        />
       </Header>
 
-      <CodeMirror 
-      className="contolled-editor"
-      options={{
-        mode: 'xml',
-        theme: 'material',
-        lineNumbers: true
-      }}
+      <CodeMirror
+        className="contolled-editor"
+        value={value}
+        onBeforeChange={handleChange}
+        options={{
+          mode: "xml",
+          theme: "material",
+          lineNumbers: true,
+        }}
       />
-    </Box>
+    </Container>
   );
 }
+
+export default Editor;
