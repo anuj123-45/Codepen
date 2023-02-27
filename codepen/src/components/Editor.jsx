@@ -12,7 +12,9 @@ import "codemirror/mode/css/css";
 
 const Container = styled(Box)`
 flex-grow:1;
+
 padding:0 8px 8px
+
   `;
 
   const Heading = styled(Box)`
